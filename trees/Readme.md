@@ -2,7 +2,7 @@
 
 ### Explain
 
-- Read through the [Cloudformation stack](./trees.yaml)
+- Read through the [Cloudformation stack](./template.yaml)
 - Try to understand the different components of the stack (make use of the [Cloudformation Docs](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html))
 - Explain what is happening in the Lambda function
 
