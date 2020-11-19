@@ -18,7 +18,7 @@ Resources:
   PythonFunction:
     Type: AWS::Lambda::Function
     Properties:
-      FunctionName: TreeFetch
+      FunctionName: GetItem
       Handler: index.handler
       Runtime: python3.7
       Role: !GetAtt LambdaRole.Arn
@@ -30,7 +30,7 @@ Resources:
           dynamodb = boto3.client('dynamodb')
 
           def handler(event, context):
-            id = event['tree_id']
+            id = event['item_id']
             table_name = os.environ['TABLE_NAME']
             result = dynamodb.get_item(
                 TableName=table_name,
@@ -47,7 +47,7 @@ Resources:
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: trees
+      TableName: my-table
       BillingMode: PAY_PER_REQUEST
       KeySchema:
         - AttributeName: id
