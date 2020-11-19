@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSLambdaExecute
+
+  NodeJSFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: GetItem
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Role: !GetAtt LambdaRole.Arn
+      Code:
+        ZipFile: |
+          const AWS = require('aws-sdk');
+          const dynamo = new AWS.DynamoDB();
+
+          exports.handler = async function(event) {
+            let id = event["item_id"];
+            return dynamo.getItem({
+              TableName: process.env.TABLE_NAME,
+              Key: {"id": {"S": id}}
+            }).promise();
+          }
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref DynamoDBTable
+
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: my-table
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
