@@ -30,13 +30,11 @@ Resources:
           dynamodb = boto3.client('dynamodb')
 
           def handler(event, context):
-            id = event['item_id']
-            table_name = os.environ['TABLE_NAME']
+            from_table = os.environ['TABLE_NAME']
+            item_id = event['item_id']
             result = dynamodb.get_item(
-                TableName=table_name,
-                Key={
-                    "id": {"S": id}
-                }
+                TableName=from_table,
+                Key={ "id": {"S": item_id} }
             )
 
             return json.dumps(result["Item"])
