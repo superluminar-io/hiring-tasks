@@ -28,8 +28,13 @@ Resources:
           const dynamo = new AWS.DynamoDB();
 
           exports.handler = async function(event) {
+            // Read table name from function environment
             let from_table = process.env.TABLE_NAME;
+            
+            // Read item id from input event
             let item_id = event["item_id"];
+            
+            // Fetch database item with item id
             return dynamo.getItem({
               TableName: from_table,
               Key: {"id": {"S": item_id}}
