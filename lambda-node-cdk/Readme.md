@@ -12,5 +12,5 @@
 - Execute the function via [Lambda GUI Console](https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/)
 - Explain why it's not working
 - Fix the error(s)
-- Discuss improvements
+- Discuss possible improvements
 
