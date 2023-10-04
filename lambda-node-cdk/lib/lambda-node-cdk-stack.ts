@@ -13,7 +13,7 @@ export class LambdaNodeCdkStack extends Stack {
     });
 
     new NodejsFunction(this, "MyFunc", {
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_18_X,
       handler: "handler",
       entry: "lib/lambda-node.ts",
       environment: {
